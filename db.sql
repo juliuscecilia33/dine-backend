@@ -12,13 +12,19 @@ CREATE TABLE allergen (
 );
 
 -- -- Create users table
--- CREATE TABLE users (
---     id SERIAL PRIMARY KEY,
---     username VARCHAR(50) UNIQUE NOT NULL,
---     email VARCHAR(255) UNIQUE NOT NULL,
---     password VARCHAR(255) NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR NOT NULL,
+    photo_url VARCHAR,
+    email VARCHAR UNIQUE NOT NULL,
+    phone_number VARCHAR UNIQUE NOT NULL,
+    is_child BOOLEAN DEFAULT false,
+    emergency_contact_name VARCHAR,
+    emergency_contact_email VARCHAR,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
 
 -- -- Create allergy_cards table to relate users with allergens
 -- CREATE TABLE allergy_cards (

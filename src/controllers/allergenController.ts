@@ -57,7 +57,7 @@ export const deleteAllergen = async (req: Request, res: Response) => {
     const { id } = req.params;
     const deleted = await allergenService.deleteAllergen(id);
     if (deleted) {
-      res.status(204).send(); // No content on successful delete
+      res.status(200).json({ msg: "Successfully deleted Allergen" }); // No content on successful delete
     } else {
       res.status(404).json({ error: "Allergen not found" });
     }
