@@ -24,23 +24,43 @@ export const registerUser = async (data: Partial<User>): Promise<User> => {
   return newUser;
 };
 
-// Authenticate a user with username and password
+// Authenticate a user with username and password, and return JWT if successful
 export const authenticateUser = async (
   username: string,
   password: string
-): Promise<User | null> => {
+): Promise<{ user: Omit<User, "password">; token: string } | null> => {
   const user = await userModel.findUserByUsername(username);
 
   if (user) {
-    // Compare the provided password with the stored hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      return user;
+      // Generate a JWT token upon successful authentication
+      const token = generateToken(user);
+
+      // Omit password before returning the user
+      const { password, ...userWithoutPassword } = user;
+
+      return {
+        user: userWithoutPassword,
+        token,
+      };
     }
   }
 
   return null;
+};
+
+// Function to generate JWT token
+export const generateToken = (user: User): string => {
+  const payload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
+
+  // Create a token with a 1-hour expiration
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
 };
 
 // Get user by ID

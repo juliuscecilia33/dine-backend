@@ -42,10 +42,15 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
-    const user = await userService.authenticateUser(username, password);
 
-    if (user) {
-      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "24h" });
+    // The authenticateUser now returns { user, token }
+    const authResponse = await userService.authenticateUser(username, password);
+
+    if (authResponse) {
+      // Destructure the user and token from the authResponse
+      const { user, token } = authResponse;
+
+      // Respond with the user details and token
       res.status(200).json({
         token,
         user: {
