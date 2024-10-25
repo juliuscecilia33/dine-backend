@@ -1,6 +1,7 @@
 import express from "express";
 import allergenRoutes from "./routes/allergenRoutes";
 import userRoutes from "./routes/userRoutes";
+import familyRoutes from "./routes/familyRoutes";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 
@@ -14,6 +15,6 @@ app.use(express.json());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/allergens", allergenRoutes);
-// Add other routes, like users and allergy cards...
+app.use("/api/family", familyRoutes);
 
 export default app;
