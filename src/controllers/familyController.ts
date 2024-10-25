@@ -13,7 +13,10 @@ export const addFamilyMember = async (req: Request, res: Response) => {
       res.status(400).json({ error: "Failed to add family member" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      msg: "Failed to add new family member",
+      error: error,
+    });
   }
 };
 
@@ -25,7 +28,10 @@ export const getFamilyMembers = async (req: Request, res: Response) => {
 
     res.status(200).json(familyMembers);
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      msg: "Failed to get family members by user id",
+      error: error,
+    });
   }
 };
 
@@ -41,7 +47,10 @@ export const updateFamilyMember = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Family member not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to update family member" });
+    res.status(500).json({
+      msg: "Failed to update family member",
+      error: error,
+    });
   }
 };
 
@@ -57,6 +66,9 @@ export const deleteFamilyMember = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Family member not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete family member" });
+    res.status(500).json({
+      msg: "Failed to delete family member",
+      error: error,
+    });
   }
 };

@@ -7,7 +7,10 @@ export const getAllAllergens = async (req: Request, res: Response) => {
     const allergens = await allergenService.getAllAllergens();
     res.status(200).json(allergens);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve allergens" });
+    res.status(500).json({
+      msg: "Failed to retrieve allergens",
+      error: error,
+    });
   }
 };
 
@@ -22,7 +25,10 @@ export const getAllergenById = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Allergen not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve allergen" });
+    res.status(500).json({
+      msg: "Failed to retrieve allergen",
+      error: error,
+    });
   }
 };
 
@@ -32,7 +38,10 @@ export const createAllergen = async (req: Request, res: Response) => {
     const newAllergen = await allergenService.createAllergen(req.body);
     res.status(201).json(newAllergen);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create allergen" });
+    res.status(500).json({
+      msg: "Failed to create allergen",
+      error: error,
+    });
   }
 };
 
@@ -47,7 +56,10 @@ export const updateAllergen = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Allergen not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to update allergen" });
+    res.status(500).json({
+      msg: "Failed to update allergen",
+      error: error,
+    });
   }
 };
 
@@ -62,6 +74,9 @@ export const deleteAllergen = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Allergen not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete allergen" });
+    res.status(500).json({
+      msg: "Failed to delete allergen",
+      error: error,
+    });
   }
 };

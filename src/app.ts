@@ -3,7 +3,6 @@ import allergenRoutes from "./routes/allergenRoutes";
 import userRoutes from "./routes/userRoutes";
 import familyRoutes from "./routes/familyRoutes";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
 
 dotenv.config();
 

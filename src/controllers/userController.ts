@@ -34,7 +34,10 @@ export const register = async (req: Request, res: Response) => {
       updated_at,
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to register user" });
+    res.status(500).json({
+      msg: "Failed to register user",
+      error: error,
+    });
   }
 };
 
@@ -68,7 +71,10 @@ export const login = async (req: Request, res: Response) => {
       res.status(401).json({ error: "Invalid credentials" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to authenticate user" });
+    res.status(500).json({
+      msg: "Failed to authenticate user",
+      error: error,
+    });
   }
 };
 
@@ -84,7 +90,10 @@ export const updateUser = async (req: Request, res: Response) => {
       res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to update user" });
+    res.status(500).json({
+      msg: "Failed to update user",
+      error: error,
+    });
   }
 };
 
@@ -95,6 +104,9 @@ export const deleteUser = async (req: Request, res: Response) => {
     await userService.deleteUser(id);
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete user" });
+    res.status(500).json({
+      msg: "Failed to delete user",
+      error: error,
+    });
   }
 };
