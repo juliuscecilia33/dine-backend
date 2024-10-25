@@ -1,73 +1,83 @@
 import { Request, Response } from "express";
-import * as familyService from "../services/familyService";
+import * as familyCircleService from "../services/familyService";
 
-// Controller to add a new family member
-export const addFamilyMember = async (req: Request, res: Response) => {
+// Create a new family relationship
+export const createFamilyRelationship = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
-    const newMember = await familyService.addFamilyMember(userId, req.body);
+    const { userId, relatedUserId, relationship } = req.body;
+    const newFamily = await familyCircleService.createFamilyRelationship(
+      userId,
+      relatedUserId,
+      relationship
+    );
 
-    if (newMember) {
-      res.status(201).json(newMember);
+    if (newFamily) {
+      res.status(201).json(newFamily);
     } else {
-      res.status(400).json({ error: "Failed to add family member" });
+      res.status(400).json({ error: "Failed to create family relationship" });
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Failed to add new family member",
+      msg: "Failed to create a new family relationship",
       error: error,
     });
   }
 };
 
-// Controller to get family members by user ID
-export const getFamilyMembers = async (req: Request, res: Response) => {
+// Get family members related to a user
+export const getFamilyByUserId = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
-    const familyMembers = await familyService.getFamilyMembers(userId);
-
-    res.status(200).json(familyMembers);
+    const { userId } = req.params;
+    const family = await familyCircleService.getFamilyByUserId(userId);
+    res.status(200).json(family);
   } catch (error) {
     res.status(500).json({
-      msg: "Failed to get family members by user id",
+      msg: "Failed to get family members",
       error: error,
     });
   }
 };
 
-// Controller to update a family member
-export const updateFamilyMember = async (req: Request, res: Response) => {
+// Update a family relationship
+export const updateFamilyRelationship = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const updatedMember = await familyService.updateFamilyMember(id, req.body);
+    const { relationship } = req.body;
 
-    if (updatedMember) {
-      res.status(200).json(updatedMember);
+    const updatedFamily = await familyCircleService.updateFamilyRelationship(
+      id,
+      relationship
+    );
+
+    if (updatedFamily) {
+      res.status(200).json(updatedFamily);
     } else {
-      res.status(404).json({ error: "Family member not found" });
+      res.status(404).json({ error: "Family relationship not found" });
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Failed to update family member",
+      msg: "Failed to update family relationship",
       error: error,
     });
   }
 };
 
-// Controller to delete a family member
-export const deleteFamilyMember = async (req: Request, res: Response) => {
+// Delete a family relationship
+export const deleteFamilyRelationship = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const deleted = await familyService.deleteFamilyMember(id);
+    const deleted = await familyCircleService.deleteFamilyRelationship(id);
 
     if (deleted) {
-      res.status(200).json({ message: "Family member deleted successfully" });
+      res
+        .status(200)
+        .json({ message: "Family relationship deleted successfully" });
     } else {
-      res.status(404).json({ error: "Family member not found" });
+      res.status(404).json({ error: "Family relationship not found" });
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Failed to delete family member",
+      msg: "Failed to delete family relationship",
       error: error,
     });
   }

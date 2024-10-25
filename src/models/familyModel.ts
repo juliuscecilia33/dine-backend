@@ -1,62 +1,53 @@
 import pool from "../config/database";
-import { FamilyMember } from "../types/familyCircleTypes";
+import { FamilyCircle } from "../types/familyCircleTypes";
 
-// Function to create a new family member
-export const createFamilyMember = async (
+// Create a new family relationship
+export const createFamilyRelationship = async (
   userId: string,
-  data: Partial<FamilyMember>
-): Promise<FamilyMember | null> => {
-  const { name, email, phone_number, relationship } = data;
-
+  relatedUserId: string,
+  relationship: string
+): Promise<FamilyCircle | null> => {
   const result = await pool.query(
-    `INSERT INTO familyCircle (user_id, name, email, phone_number, relationship)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO familyCircle (user_id, related_user_id, relationship)
+     VALUES ($1, $2, $3)
      RETURNING *`,
-    [userId, name, email, phone_number, relationship]
+    [userId, relatedUserId, relationship]
   );
-
   return result.rows[0] || null;
 };
 
-// Function to get all family members by user ID
-export const getFamilyMembersByUserId = async (
+// Get all family members related to a user
+export const getFamilyByUserId = async (
   userId: string
-): Promise<FamilyMember[]> => {
+): Promise<FamilyCircle[]> => {
   const result = await pool.query(
-    `SELECT * FROM familyCircle WHERE user_id = $1 ORDER BY created_at DESC`,
+    `SELECT * FROM familyCircle WHERE related_user_id = $1`,
     [userId]
   );
-
   return result.rows;
 };
 
-// Function to update a family member
-export const updateFamilyMember = async (
+// Update a family relationship
+export const updateFamilyRelationship = async (
   id: string,
-  data: Partial<FamilyMember>
-): Promise<FamilyMember | null> => {
-  const { name, email, phone_number, relationship } = data;
-
+  relationship: string
+): Promise<FamilyCircle | null> => {
   const result = await pool.query(
     `UPDATE familyCircle
-     SET name = COALESCE($1, name),
-         email = COALESCE($2, email),
-         phone_number = COALESCE($3, phone_number),
-         relationship = COALESCE($4, relationship),
-         updated_at = NOW()
-     WHERE id = $5
+     SET relationship = COALESCE($1, relationship), updated_at = NOW()
+     WHERE id = $2
      RETURNING *`,
-    [name, email, phone_number, relationship, id]
+    [relationship, id]
   );
-
   return result.rows[0] || null;
 };
 
-// Function to delete a family member
-export const deleteFamilyMember = async (id: string): Promise<boolean> => {
+// Delete a family relationship
+export const deleteFamilyRelationship = async (
+  id: string
+): Promise<boolean> => {
   const result = await pool.query(`DELETE FROM familyCircle WHERE id = $1`, [
     id,
   ]);
-
   return result.rowCount ? result.rowCount > 0 : false;
 };

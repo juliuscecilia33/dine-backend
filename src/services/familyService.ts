@@ -1,32 +1,35 @@
-// services/familyService.ts
+// familyCircleService.ts
 
-import * as familyModel from "../models/familyModel";
-import { FamilyMember } from "../types/familyCircleTypes";
+import * as familyCircleModel from "../models/familyModel";
+import { FamilyCircle } from "../types/familyCircleTypes";
 
-// Service to add a new family member
-export const addFamilyMember = async (
+export const createFamilyRelationship = async (
   userId: string,
-  data: Partial<FamilyMember>
-): Promise<FamilyMember | null> => {
-  return await familyModel.createFamilyMember(userId, data);
+  relatedUserId: string,
+  relationship: string
+): Promise<FamilyCircle | null> => {
+  return familyCircleModel.createFamilyRelationship(
+    userId,
+    relatedUserId,
+    relationship
+  );
 };
 
-// Service to retrieve family members by user ID
-export const getFamilyMembers = async (
+export const getFamilyByUserId = async (
   userId: string
-): Promise<FamilyMember[]> => {
-  return await familyModel.getFamilyMembersByUserId(userId);
+): Promise<FamilyCircle[]> => {
+  return familyCircleModel.getFamilyByUserId(userId);
 };
 
-// Service to update an existing family member
-export const updateFamilyMember = async (
+export const updateFamilyRelationship = async (
   id: string,
-  data: Partial<FamilyMember>
-): Promise<FamilyMember | null> => {
-  return await familyModel.updateFamilyMember(id, data);
+  relationship: string
+): Promise<FamilyCircle | null> => {
+  return familyCircleModel.updateFamilyRelationship(id, relationship);
 };
 
-// Service to delete a family member
-export const deleteFamilyMember = async (id: string): Promise<boolean> => {
-  return await familyModel.deleteFamilyMember(id);
+export const deleteFamilyRelationship = async (
+  id: string
+): Promise<boolean> => {
+  return familyCircleModel.deleteFamilyRelationship(id);
 };

@@ -1,10 +1,9 @@
-export interface FamilyMember {
+// types.ts
+export type FamilyCircle = {
   id: string;
   user_id: string;
-  name: string;
-  email: string;
-  phone_number: string;
+  related_user_id: string;
   relationship: string;
   created_at: Date;
   updated_at: Date;
-}
+};
