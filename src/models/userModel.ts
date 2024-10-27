@@ -5,6 +5,7 @@ import { User } from "../types/userTypes";
 export const createUser = async (data: Partial<User>): Promise<User> => {
   const {
     username,
+    name,
     password,
     photo_url,
     email,
@@ -15,10 +16,11 @@ export const createUser = async (data: Partial<User>): Promise<User> => {
   } = data;
 
   const result = await pool.query(
-    `INSERT INTO users (username, password, photo_url, email, phone_number, is_child, emergency_contact_name, emergency_contact_email, created_at, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW()) RETURNING *`,
+    `INSERT INTO users (username, name, password, photo_url, email, phone_number, is_child, emergency_contact_name, emergency_contact_email, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW()) RETURNING *`,
     [
       username,
+      name,
       password,
       photo_url,
       email,
@@ -54,6 +56,7 @@ export const updateUser = async (
   data: Partial<User>
 ): Promise<User | null> => {
   const {
+    name,
     username,
     password,
     photo_url,
@@ -74,8 +77,9 @@ export const updateUser = async (
          is_child = COALESCE($6, is_child),
          emergency_contact_name = COALESCE($7, emergency_contact_name),
          emergency_contact_email = COALESCE($8, emergency_contact_email),
+         name = COALESCE($9, name),
          updated_at = NOW()
-     WHERE id = $9
+     WHERE id = $10
      RETURNING *`,
     [
       username,
@@ -86,6 +90,7 @@ export const updateUser = async (
       is_child,
       emergency_contact_name,
       emergency_contact_email,
+      name,
       id,
     ]
   );

@@ -10,6 +10,7 @@ export const register = async (req: Request, res: Response) => {
     const newUser = await userService.registerUser(req.body);
     const {
       id,
+      name,
       username,
       photo_url,
       email,
@@ -23,6 +24,7 @@ export const register = async (req: Request, res: Response) => {
 
     res.status(201).json({
       id,
+      name,
       username,
       photo_url,
       email,
@@ -34,6 +36,7 @@ export const register = async (req: Request, res: Response) => {
       updated_at,
     });
   } catch (error) {
+    console.log("error: ", error);
     res.status(500).json({
       msg: "Failed to register user",
       error: error,
@@ -58,6 +61,7 @@ export const login = async (req: Request, res: Response) => {
         token,
         user: {
           id: user.id,
+          name: user.name,
           username: user.username,
           photo_url: user.photo_url,
           email: user.email,
