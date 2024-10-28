@@ -1,0 +1,9 @@
+TODO: 
+- UserAllergyCards
+- Medical Allergy Card
+- Visual Allergy Card
+- Standard Allergy Card
+- Detailed Allergy Card
+- Language Specific Card
+- Kid Friendly Allergy Card
+- Event Specific Allergy Card
