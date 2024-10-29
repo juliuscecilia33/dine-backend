@@ -13,6 +13,10 @@ export const getAllergenById = async (id: string): Promise<Allergen | null> => {
   return result.rows[0] || null;
 };
 
+// TODO: Get user's allergens; im thinking we have a pre-defined bank
+// of allergens; and if the user can add a custom one if they can't find theres
+// allergens dataset?
+
 // Create a new allergen
 export const createAllergen = async (
   data: Partial<Allergen>

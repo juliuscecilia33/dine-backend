@@ -43,12 +43,16 @@ CREATE TABLE familyCircle (
         ON DELETE CASCADE                            -- Delete familyCircle entries if user is deleted
 );
 
--- -- Create allergy_cards table to relate users with allergens
--- CREATE TABLE allergy_cards (
---     id SERIAL PRIMARY KEY,
---     user_id INT REFERENCES users(id) ON DELETE CASCADE,
---     allergen_id INT REFERENCES allergens(id) ON DELETE CASCADE,
---     severity VARCHAR(50),  -- e.g., mild, moderate, severe
---     notes TEXT,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
+CREATE TABLE standard_card (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),  
+    user_id UUID NOT NULL,
+    description VARCHAR,
+    notes JSON,
+    shared_with JSON,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(), 
+    CONSTRAINT fk_user                             
+        FOREIGN KEY (user_id) 
+        REFERENCES users(id) 
+        ON DELETE CASCADE 
+);

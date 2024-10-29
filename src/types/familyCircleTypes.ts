@@ -1,4 +1,3 @@
-// types.ts
 export type FamilyCircle = {
   id: string;
   user_id: string;

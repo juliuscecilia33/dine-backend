@@ -1,9 +1,13 @@
 TODO: 
-- UserAllergyCards
+- Standard Allergy Card
+- Allergens (Get allergens by user) 
+    - Get user's allergens; im thinking we have a pre-defined bank
+      of allergens; and if the user can add a custom one if they can't find theres
+      allergens dataset
 - Medical Allergy Card
 - Visual Allergy Card
-- Standard Allergy Card
 - Detailed Allergy Card
 - Language Specific Card
 - Kid Friendly Allergy Card
 - Event Specific Allergy Card
+- AllAllergyCards
