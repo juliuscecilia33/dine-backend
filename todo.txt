@@ -1,3 +1,5 @@
+Types -> Models -> Services -> Controllers
+
 TODO: 
 - Standard Allergy Card
 - Allergens (Get allergens by user) 

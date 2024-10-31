@@ -4,12 +4,12 @@ import { StandardCard } from "../../types/cards/standardCardTypes";
 // Get all standard cards by user
 export const getAllStandardCardsByUser = async (
   user_id: string
-): Promise<StandardCard | null> => {
+): Promise<StandardCard[]> => {
   const result = await pool.query(
     "SELECT * FROM standard_card WHERE user_id = $1",
     [user_id]
   );
-  return result.rows[0] || null;
+  return result.rows;
 };
 
 // Get a specific standard card by user and card id
@@ -40,7 +40,7 @@ export const createStandardCard = async (
 };
 
 // Update an existing standrad card
-export const updateAllergen = async (
+export const updateStandardCard = async (
   id: string,
   data: Partial<StandardCard>
 ): Promise<StandardCard | null> => {
