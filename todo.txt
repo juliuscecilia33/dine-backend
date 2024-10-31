@@ -1,7 +1,8 @@
-Types -> Models -> Services -> Controllers
+Types -> Models -> Services -> Controllers -> Routes
 
 TODO: 
 - Standard Allergy Card
+  - On standard controller create a standard card ⌛️
 - Allergens (Get allergens by user) 
     - Get user's allergens; im thinking we have a pre-defined bank
       of allergens; and if the user can add a custom one if they can't find theres
